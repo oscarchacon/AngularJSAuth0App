@@ -14,6 +14,8 @@
     var idToken;
     var expiresAt;
 
+    var userProfile;
+
     function getIdToken() {
       return idToken;
     }
@@ -78,6 +80,26 @@
       return localStorage.getItem('isLoggedIn') === 'true' && new Date().getTime() < expiresAt;
     }
 
+    function getProfile(cb) {
+      if (!accessToken) {
+        throw new Error('Access Token must exist to fetch profile');
+      }
+      angularAuth0.client.userInfo(accessToken, function(err, profile) {
+        if (profile) {
+          setUserProfile(profile);
+        }
+        cb(err, profile);
+      });
+    }
+    
+    function setUserProfile(profile) {
+      userProfile = profile;
+    }
+    
+    function getCachedProfile() {
+      return userProfile;
+    }
+
     return {
       login: login,
       getIdToken: getIdToken,
@@ -85,7 +107,8 @@
       handleAuthentication: handleAuthentication,
       logout: logout,
       isAuthenticated: isAuthenticated,
-      renewTokens: renewTokens
+      renewTokens: renewTokens,
+      userProfile: userProfile
     }
   }
 })();

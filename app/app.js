@@ -32,6 +32,11 @@
         controller: 'CallbackController',
         templateUrl: 'app/callback/callback.html',
         controllerAs: 'vm'
+      }).state('profile', {
+        url: '/profile',
+        controller: 'ProfileController',
+        templateUrl: 'app/profile/profile.html',
+        controllerAs: 'vm'
       });
 
     // Initialization for the angular-auth0 library
@@ -40,7 +45,7 @@
       domain: AUTH0_DOMAIN,
       responseType: 'token id_token',
       redirectUri: AUTH0_CALLBACK_URL,
-      scope: 'openid'
+      scope: 'openid profile email'
     });
 
     $urlRouterProvider.otherwise('/');

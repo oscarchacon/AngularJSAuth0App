@@ -17,6 +17,14 @@
           Log In
       </button>
 
+      <a
+        id="qsLoginBtn"
+        class="btn btn-primary btn-margin"
+        ng-if="vm.auth.isAuthenticated()"
+        href="/#/profile">
+          Profile
+      </a>
+
       <button
         id="qsLogoutBtn"
         class="btn btn-primary btn-margin"
