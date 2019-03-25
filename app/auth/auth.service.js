@@ -74,6 +74,11 @@
       idToken = '';
       expiresAt = 0;
       clearTimeout(tokenRenewalTimeout);
+      localStorage.clear();
+      angularAuth0.logout({
+        returnTo: 'http://localhost:3000',
+        clientID: AUTH0_CLIENT_ID
+      });
       $state.go('home');
     }
 
