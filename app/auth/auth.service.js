@@ -16,6 +16,8 @@
 
     var userProfile;
 
+    var tokenRenewalTimeout;
+
     function getIdToken() {
       return idToken;
     }
@@ -71,13 +73,23 @@
       accessToken = '';
       idToken = '';
       expiresAt = 0;
+      clearTimeout(tokenRenewalTimeout);
       $state.go('home');
     }
 
     function isAuthenticated() {
-      // Check whether the current time is past the 
+      // Check whether the current time is past the
       // access token's expiry time
       return localStorage.getItem('isLoggedIn') === 'true' && new Date().getTime() < expiresAt;
+    }
+
+    function scheduleRenewal() {
+      var delay = expiresAt - Date.now();
+      if (delay > 0) {
+        tokenRenewalTimeout = setTimeout(function() {
+          renewTokens();
+        }, delay);
+      }
     }
 
     function getProfile(cb) {
@@ -91,11 +103,11 @@
         cb(err, profile);
       });
     }
-    
+
     function setUserProfile(profile) {
       userProfile = profile;
     }
-    
+
     function getCachedProfile() {
       return userProfile;
     }
@@ -108,7 +120,9 @@
       logout: logout,
       isAuthenticated: isAuthenticated,
       renewTokens: renewTokens,
-      userProfile: userProfile
+      scheduleRenewal: scheduleRenewal,
+      getCachedProfile: getCachedProfile,
+      getProfile: getProfile,
     }
   }
 })();
