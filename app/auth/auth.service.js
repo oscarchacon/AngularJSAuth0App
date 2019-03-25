@@ -76,7 +76,7 @@
       clearTimeout(tokenRenewalTimeout);
       localStorage.clear();
       angularAuth0.logout({
-        returnTo: 'http://localhost:3000',
+        returnTo: AUTH0_LOGOUT_URL,
         clientID: AUTH0_CLIENT_ID
       });
       $state.go('home');
