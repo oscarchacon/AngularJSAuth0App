@@ -79,6 +79,7 @@
         returnTo: AUTH0_LOGOUT_URL,
         clientID: AUTH0_CLIENT_ID
       });
+      
       $state.go('home');
     }
 
