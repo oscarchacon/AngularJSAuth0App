@@ -48,7 +48,8 @@
       scope: 'openid profile email'
     });
 
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider
+      .otherwise('/');
 
     $locationProvider.hashPrefix('');
 
